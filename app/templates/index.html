@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Times App</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lesson Times App</h1>
+
+    {% for day in schedule %}
+        <h2>{{ day['date'] }}</h2>
+        {% if day['free_times'] %}
+            <table>
+                <tr>
+                    <th>Free Times</th>
+                </tr>
+                {% for free_time in day['free_times'] %}
+                    <tr>
+                        <td>Free between {{ free_time['start'] }} - {{ free_time['end'] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No free times available for this date.</p>
+        {% endif %}
+    {% endfor %}
+    
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
